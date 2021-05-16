@@ -3,6 +3,7 @@ package com.example.foto
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,11 +20,12 @@ class MainActivity : AppCompatActivity() {
         this.image = findViewById(R.id.imagem)
         this.image.setOnClickListener { foto(it) }
     }
+
     private fun foto(view: View) {
-        var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (intent.resolveActivity(packageManager) != null) {
-            startActivityForResult(intent, 1)
+            startActivityForResult(intent, Companion.REQUEST_IMAGE_CAPTURE)
         } else {
             Toast.makeText(this, "Erro, não tem activity", Toast.LENGTH_SHORT)
         }
@@ -38,5 +40,9 @@ class MainActivity : AppCompatActivity() {
                 this.image.setImageBitmap(thumbnail)
             }
         }
+    }
+
+    companion object {
+        const val REQUEST_IMAGE_CAPTURE = 1
     }
 }
